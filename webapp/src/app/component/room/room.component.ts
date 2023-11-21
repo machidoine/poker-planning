@@ -19,8 +19,13 @@ export class RoomComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.service.getRoom()
-      .subscribe(room => this.room = room);
+    // this.service.getRoom()
+    //   .subscribe(room => this.room = room);
+
+    this.service.getRoomById("12")
+      .subscribe(event => {
+        console.log(event)
+      })
   }
 
 }

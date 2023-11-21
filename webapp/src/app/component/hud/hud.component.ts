@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {DeckComponent} from "./deck/deck.component";
 
 @Component({
-  selector: 'app-hud',
+  selector: 'hud',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DeckComponent, DeckComponent, DeckComponent],
   templateUrl: './hud.component.html',
   styleUrls: ['./hud.component.css']
 })
