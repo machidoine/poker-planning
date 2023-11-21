@@ -1,0 +1,11 @@
+:host {
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 100%;
+
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

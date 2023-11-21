@@ -1,0 +1,32 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: fit-content;
+  font-weight: 700;
+  font-size: 2vh;
+
+}
+
+.player-info {
+  align-self: center;
+  text-align: center;
+  width: 10vh;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.player-info:hover {
+  overflow: visible;
+}
+
+.player-info:hover span {
+  position: relative;
+  background-color: white;
+
+  box-shadow: 0 0 4px 0 black;
+  border-radius: 1px;
+}

@@ -1,0 +1,47 @@
+:host {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  position: relative;
+  height: 13vh;
+  width: 10vh;
+  border-radius: 1vh;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 1vh;
+  background: radial-gradient(rgba(250, 207, 142, 0.23), 60%,
+  rgba(237, 198, 166, 0.541));
+}
+
+:host.no-value {
+  background: radial-gradient(rgba(250, 142, 142, 0.23), 60%,
+  rgba(237, 166, 166, 0.541));
+}
+
+:host.with-value {
+  background: radial-gradient(rgba(62, 255, 75, 0.23), 60%,
+  rgba(62, 255, 75, 0.541));
+}
+
+.value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+}
+
+:host.recto {
+  font-size: 5vh;
+  font-weight: 800;
+}
+
+:host.verso {
+  font-size: 5vh;
+  font-weight: 800;
+}
+
+:host.verso span {
+  display: none;
+}
+
+:host.verso .value::before {
+  content: "X";
+}

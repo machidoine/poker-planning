@@ -1,0 +1,58 @@
+:host {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  position: relative;
+  height: 13vh;
+  width: 10vh;
+  border-radius: 1vh;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 0.7vh;
+  margin-top: 1vh;
+  background: radial-gradient(rgba(250, 207, 142, 0.23), 60%, rgba(237, 198, 166, 0.541));
+}
+
+:host.selected,
+:host.selected:hover {
+  outline: 0.3vh solid rgb(208, 170, 114);
+  background: radial-gradient(rgba(250, 207, 142, 0.23), 60%, rgba(250, 207, 142, 0.541));
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.479);
+  transform: translate(0%, -10%);
+}
+
+:host:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.479);
+  background: radial-gradient(rgba(237, 198, 166, 0.541), 60%, rgba(250, 207, 142, 0.23));
+  outline: 0.3vh solid rgb(208, 170, 114);
+  transform: translate(0%, -8%);
+}
+
+.top-left,
+.bottom-right {
+  position: absolute;
+  font-size: 2vh;
+}
+
+.top-left {
+  top: 0;
+  left: 0;
+  padding-left: 0.6vh;
+  padding-top: 0.6vh;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  font-size: 5vh;
+  font-weight: 800;
+}
+
+.bottom-right {
+  bottom: 0;
+  right: 0;
+
+  padding-right: 0.6vh;
+  padding-bottom: 0.6vh;
+}
