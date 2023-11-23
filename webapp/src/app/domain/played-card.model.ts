@@ -1,9 +1,11 @@
 export interface PlayedCardModel {
   value?: number,
-  isRecto: boolean;
+  isRecto: boolean,
+  played: boolean
 }
 
 export const EMPTY_PLAYED_CARD: PlayedCardModel = {
   value: undefined,
-  isRecto: true
+  isRecto: true,
+  played: false
 };

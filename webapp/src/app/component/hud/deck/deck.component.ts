@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DeckModel} from "../../../domain/deck.model";
 import {DeckService} from "./deck.service";
 import {CardComponent} from "./card/card.component";
+import {CardModel} from "../../../domain/card.model";
 
 @Component({
   selector: 'deck',
@@ -17,9 +18,17 @@ export class DeckComponent implements OnInit {
   constructor(private deckService: DeckService) {
   }
 
+  @Output() hasBeenSelected = new EventEmitter<CardModel>();
+
   ngOnInit() {
     this.deckService.getDeck()
       .subscribe(deck => this.deck = deck);
   }
+
+  cardSelected($event: CardModel) {
+    this.deck?.cards.forEach(c => c.selected = false)
+    this.hasBeenSelected.emit($event);
+  }
+
 
 }

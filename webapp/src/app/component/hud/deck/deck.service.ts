@@ -8,15 +8,8 @@ import {DeckModel} from "../../../domain/deck.model";
 })
 export class DeckService {
 
-  // constructor(private http:HttpClient) { }
-
   getDeck() {
     return new Observable<DeckModel>(o => o.next(FIBO_DECK));
   }
 
-  // selectCard(card:CardModel) {
-  //   this.http.put("/api/poker-planning/select-card", {
-  //
-  //   });
-  // }
 }

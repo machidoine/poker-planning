@@ -2,10 +2,12 @@ import {PlayerModel} from "./player.model";
 
 export interface RoomModel {
   id: string,
-  players: PlayerModel[];
+  cardRevealed: boolean,
+  players: PlayerModel[]
 }
 
 export const EMPTY_ROOM: RoomModel = {
   id: "empty",
+  cardRevealed: false,
   players: []
 };

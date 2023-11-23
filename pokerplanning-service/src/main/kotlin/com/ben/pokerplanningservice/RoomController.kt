@@ -16,14 +16,14 @@ class RoomController {
     @PostMapping("/{roomId}/reveal-card")
     @ResponseBody
     fun revealCard(@PathVariable roomId: String) {
-        rooms[roomId]?.cardRevealed = true;
+        rooms[roomId]?.cardRevealed = true
         broadcastRoomToEachPlayer(roomId, "reveal-card")
     }
 
     @PostMapping("/{roomId}/hide-card")
     @ResponseBody
     fun hideCard(@PathVariable roomId: String) {
-        rooms[roomId]?.cardRevealed = false;
+        rooms[roomId]?.cardRevealed = false
 
         broadcastRoomToEachPlayer(roomId, "hide-card")
     }
@@ -31,7 +31,7 @@ class RoomController {
     @PostMapping("/{roomId}/reset")
     @ResponseBody
     fun reset(@PathVariable roomId: String) {
-        rooms[roomId]?.cardRevealed = false;
+        rooms[roomId]?.cardRevealed = false
         rooms[roomId]?.players?.replaceAll { p -> p.copy(card = null, hasPlayed = false) }
 
         broadcastRoomToEachPlayer(roomId, "reset")
@@ -39,6 +39,7 @@ class RoomController {
 
     @PostMapping("/{roomId}/player/{playerId}/play-card")
     @ResponseBody
+    @CrossOrigin(origins = ["*"])
     fun playCard(@PathVariable roomId: String, @PathVariable playerId: UUID, @RequestBody card: Int) {
         val foundPlayerIndex = rooms[roomId]?.players?.indexOfFirst { p -> p.id.privateId == playerId }
         if (foundPlayerIndex != null) {
@@ -52,7 +53,7 @@ class RoomController {
     private fun broadcastRoomToEachPlayer(roomId: String, eventName: String) {
         rooms[roomId]?.players?.forEach { player ->
             try {
-                rooms[roomId]?.players?.map { p -> p.toPublicPlayer(rooms[roomId]?.cardRevealed == true) }?.let {
+                rooms[roomId]?.toRoomDto()?. let {
                     player.emitter.send(
                         SseEmitter.event()
                             .name(eventName)
@@ -68,6 +69,7 @@ class RoomController {
 
     @GetMapping("/{roomId}/register-player")
     @ResponseBody
+    @CrossOrigin(origins = ["*"])
     fun register(@PathVariable roomId: String, @RequestParam name: String): SseEmitter {
         val player = Player(name, SseEmitter(Long.MAX_VALUE), null)
 

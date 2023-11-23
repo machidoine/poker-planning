@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {DeckComponent} from "./deck/deck.component";
+import {CardModel} from "../../domain/card.model";
 
 @Component({
   selector: 'hud',
@@ -11,4 +12,8 @@ import {DeckComponent} from "./deck/deck.component";
 })
 export class HudComponent {
 
+
+  cardSelected($selectedCard: CardModel) {
+
+  }
 }

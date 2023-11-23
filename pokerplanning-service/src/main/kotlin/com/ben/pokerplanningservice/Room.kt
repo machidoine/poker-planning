@@ -20,20 +20,6 @@ data class Player(
     val id: PlayerId = PlayerId()
 )
 
-data class PublicPlayer(
-    val name: String,
-    val card: Int?,
-    val hasPlayed: Boolean,
-    val publicId: UUID
-)
-
-fun Player.toPublicPlayer(showCard: Boolean) = PublicPlayer(
-    name = name,
-    card = if (showCard) card else null,
-    hasPlayed = hasPlayed,
-    publicId = id.publicId
-)
-
 data class PlayerId(
     val publicId: UUID = UUID.randomUUID(),
     val privateId: UUID = UUID.randomUUID()

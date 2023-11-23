@@ -10,12 +10,12 @@
   rgba(237, 198, 166, 0.541));
 }
 
-:host.no-value {
+:host.not-played {
   background: radial-gradient(rgba(250, 142, 142, 0.23), 60%,
   rgba(237, 166, 166, 0.541));
 }
 
-:host.with-value {
+:host.played {
   background: radial-gradient(rgba(62, 255, 75, 0.23), 60%,
   rgba(62, 255, 75, 0.541));
 }

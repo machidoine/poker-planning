@@ -1,6 +1,5 @@
 import {Component, HostBinding, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {EMPTY_PLAYER, PlayerModel} from "../../../domain/player.model";
 import {EMPTY_PLAYED_CARD, PlayedCardModel} from "../../../domain/played-card.model";
 
 @Component({
@@ -14,14 +13,14 @@ export class PlayedCardComponent {
 
   @Input() playedCard: PlayedCardModel = EMPTY_PLAYED_CARD;
 
-  @HostBinding("class.no-value")
-  get noValue() {
-    return this.playedCard.value === undefined
+  @HostBinding("class.not-played")
+  get notPlayed() {
+    return !this.played
   }
 
-  @HostBinding("class.with-value")
-  get withValue() {
-    return this.playedCard.value !== undefined
+  @HostBinding("class.played")
+  get played() {
+    return this.playedCard.played
   }
 
   @HostBinding("class.recto")
