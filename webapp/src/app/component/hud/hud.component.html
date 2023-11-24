@@ -1,4 +1,4 @@
-<button>reset</button>
-<button>hide/show</button>
+<button (click)="resetRoom()">reset</button>
+<button (click)="hideCard()">hide</button>
+<button (click)="revealCard()">reveal</button>
 <deck (hasBeenSelected)="cardSelected($event)" />
-

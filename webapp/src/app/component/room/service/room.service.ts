@@ -1,15 +1,27 @@
 import {Injectable, NgZone} from '@angular/core';
 import {Observable} from "rxjs";
 import {RoomModel} from "../../../domain/room.model";
-import {ROOM_MOCK} from "../room.mock";
 import {SseServiceService} from "../../../sse-service.service";
 import {PlayerIdDtoModel} from "./player-id-dto.model";
 import {RoomDtoModel} from "./room-dto.model";
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomService {
+
+  private _playerId: PlayerIdDtoModel | undefined
+  private _roomId: string | undefined
+
+  get playerId() {
+    return this._playerId
+  }
+
+  get roomId() {
+    return this._roomId
+  }
+
   constructor(private zone: NgZone, private sseService: SseServiceService) {
   }
 
@@ -18,16 +30,10 @@ export class RoomService {
       const eventSource = this.sseService.getEventSource(url)
 
       eventSource.addEventListener("new-player-id", e => {
-        const playerId: PlayerIdDtoModel = JSON.parse(e.data)
-        console.log(playerId)
+        this._playerId = JSON.parse(e.data)
       })
 
-      let dispatchRoom = (e: MessageEvent<any>) => {
-        console.log(e)
-        this.zone.run(() => {
-          observer.next(this.toRoomModel(e))
-        })
-      };
+      let dispatchRoom = (e: MessageEvent<any>) => this.zone.run(() => observer.next(this.toRoomModel(e)));
 
       eventSource.addEventListener("new-player", dispatchRoom)
       eventSource.addEventListener("play-card", dispatchRoom)
@@ -37,12 +43,8 @@ export class RoomService {
 
       eventSource.onerror = error => {
         console.log(error)
-        this.zone.run(() => {
-          observer.error(error)
-        })
+        this.zone.run(() => observer.error(error))
       }
-
-      console.log(eventSource)
     })
   }
 
@@ -65,12 +67,8 @@ export class RoomService {
     }
   }
 
-  getRoom(): Observable<RoomModel> {
-    return new Observable<RoomModel>(o => o.next(ROOM_MOCK));
-  }
-
   getRoomById(roomId: string, name: string): Observable<RoomModel> {
-    return this.getServerSentEvent(`http://localhost:8080/api/rooms/${roomId}/register-player?name=${name}`, roomId)
-    //return new Observable<RoomModel>(o => o.next(ROOM_MOCK));
+    this._roomId = roomId
+    return this.getServerSentEvent(`${environment.apiUrl}/api/rooms/${roomId}/register-player?name=${name}`, roomId)
   }
 }
