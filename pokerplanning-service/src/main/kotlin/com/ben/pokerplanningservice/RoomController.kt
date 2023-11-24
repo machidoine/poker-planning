@@ -78,8 +78,7 @@ class RoomController {
                 rooms[roomId]?.players?.indexOfFirst { p -> p.id.privateId == UUID.fromString(playerId) }
             if (foundPlayerIndex != null && foundPlayerIndex != -1) {
                 val player = rooms[roomId]?.players?.get(foundPlayerIndex)
-                val emitter = SseEmitter(Long.MAX_VALUE)
-                rooms[roomId]?.players?.set(foundPlayerIndex, player?.copy(emitter = emitter))
+                val emitter = player?.emitter
 
                 rooms[roomId]?.players?.get(foundPlayerIndex)?.let {
                     it.emitter.send(
@@ -92,7 +91,7 @@ class RoomController {
 
                 broadcastRoomToEachPlayer(roomId, "new-player")
 
-                return emitter
+                return emitter!!
             }
         }
 

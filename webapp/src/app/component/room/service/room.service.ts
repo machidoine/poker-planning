@@ -5,7 +5,6 @@ import {SseServiceService} from "../../../sse-service.service";
 import {PlayerIdDtoModel} from "./player-id-dto.model";
 import {RoomDtoModel} from "./room-dto.model";
 import {environment} from "../../../../environments/environment";
-import {CookieService} from "ngx-cookie-service";
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +22,10 @@ export class RoomService {
     return this._roomId
   }
 
-  constructor(private zone: NgZone, private sseService: SseServiceService, private cookieService: CookieService) {
-    if(this.cookieService.get('playerId')) {
-      this._playerId = JSON.parse(this.cookieService.get('playerId'))
+  constructor(private zone: NgZone, private sseService: SseServiceService) {
+    const playerId = sessionStorage.getItem('playerId')
+    if (playerId) {
+      this._playerId = JSON.parse(playerId)
     }
   }
 
@@ -35,7 +35,7 @@ export class RoomService {
 
       eventSource.addEventListener("new-player-id", e => {
         this._playerId = JSON.parse(e.data)
-        this.cookieService.set('playerId', JSON.stringify(this._playerId))
+        sessionStorage.setItem('playerId', JSON.stringify(this._playerId))
       })
 
       let dispatchRoom = (e: MessageEvent<any>) => this.zone.run(() => observer.next(this.toRoomModel(e)));
