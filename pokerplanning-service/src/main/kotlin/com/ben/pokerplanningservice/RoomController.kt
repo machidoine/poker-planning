@@ -1,7 +1,5 @@
 package com.ben.pokerplanningservice
 
-import org.springframework.http.HttpStatus
-import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
@@ -43,7 +41,7 @@ class RoomController {
     @ResponseBody
     fun playCard(@PathVariable roomId: String, @PathVariable playerId: UUID, @RequestBody card: Int) {
         val foundPlayerIndex = rooms[roomId]?.players?.indexOfFirst { p -> p.id.privateId == playerId }
-        if (foundPlayerIndex != null) {
+        if (foundPlayerIndex != null && foundPlayerIndex != -1) {
             val player = rooms[roomId]?.players?.get(foundPlayerIndex)
             rooms[roomId]?.players?.set(foundPlayerIndex, player?.copy(card = card, hasPlayed = true))
 
@@ -78,34 +76,43 @@ class RoomController {
         if (playerId != null) {
             val foundPlayerIndex =
                 rooms[roomId]?.players?.indexOfFirst { p -> p.id.privateId == UUID.fromString(playerId) }
-            if (foundPlayerIndex != null) {
+            if (foundPlayerIndex != null && foundPlayerIndex != -1) {
                 val player = rooms[roomId]?.players?.get(foundPlayerIndex)
                 val emitter = SseEmitter(Long.MAX_VALUE)
                 rooms[roomId]?.players?.set(foundPlayerIndex, player?.copy(emitter = emitter))
+
+                rooms[roomId]?.players?.get(foundPlayerIndex)?.let {
+                    it.emitter.send(
+                        SseEmitter.event()
+                            .name("new-player-id")
+                            .data(it.id)
+                            .build()
+                    )
+                }
+
+                broadcastRoomToEachPlayer(roomId, "new-player")
+
                 return emitter
             }
-            throw PlayerIdNotFoundException()
-        } else {
-            val player = Player(name, SseEmitter(Long.MAX_VALUE), null)
-
-            rooms.getOrPut(roomId) { Room(roomId) }?.players?.add(player)
-            player.emitter.onCompletion { rooms[roomId]?.players?.remove(player) }
-            player.emitter.onTimeout { rooms[roomId]?.players?.remove(player) }
-
-            player.emitter.send(
-                SseEmitter.event()
-                    .name("new-player-id")
-                    .data(player.id)
-                    .build()
-            )
-
-            broadcastRoomToEachPlayer(roomId, "new-player")
-
-            return player.emitter
         }
+
+        val player = Player(name, SseEmitter(Long.MAX_VALUE), null)
+
+        rooms.getOrPut(roomId) { Room(roomId) }?.players?.add(player)
+        player.emitter.onCompletion { rooms[roomId]?.players?.remove(player) }
+        player.emitter.onTimeout { rooms[roomId]?.players?.remove(player) }
+
+        player.emitter.send(
+            SseEmitter.event()
+                .name("new-player-id")
+                .data(player.id)
+                .build()
+        )
+
+        broadcastRoomToEachPlayer(roomId, "new-player")
+
+        return player.emitter
+
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    class PlayerIdNotFoundException : RuntimeException() {
-    }
 }
