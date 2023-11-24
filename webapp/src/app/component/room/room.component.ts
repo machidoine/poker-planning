@@ -1,27 +1,28 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {PlayerComponent} from "./player/player.component";
-import {RoomService} from "./service/room.service";
-import {EMPTY_ROOM, RoomModel} from "../../domain/room.model";
+import {HudComponent} from "./hud/hud.component";
+import {TableComponent} from "./table/table.component";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
-  selector: 'room',
-  standalone: true,
-  imports: [CommonModule, PlayerComponent],
-  templateUrl: './room.component.html',
-  styleUrls: ['./room.component.css']
+    selector: 'room',
+    standalone: true,
+    imports: [CommonModule, HudComponent, TableComponent],
+    templateUrl: './room.component.html',
+    styleUrl: './room.component.css'
 })
-export class RoomComponent implements OnInit {
-  room: RoomModel = EMPTY_ROOM;
+export class RoomComponent {
+    _playerName: string = "";
 
-  constructor(private service: RoomService) {
-  }
+    get roomId(): string {
+        return <string>this.route.snapshot.paramMap.get('roomId')
+    }
 
-  ngOnInit(): void {
-    this.service.getRoomById("12", "ben")
-      .subscribe(room => {
-        this.room = room
-      })
-  }
+    get playerName(): string {
+        return this._playerName
+    }
 
+    constructor(private route: ActivatedRoute, private router: Router) {
+        this._playerName = this.router.getCurrentNavigation()?.extras?.state?.['playerName']
+    }
 }

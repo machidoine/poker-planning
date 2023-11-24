@@ -1,6 +1,6 @@
 import {Component, HostBinding, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {EMPTY_PLAYED_CARD, PlayedCardModel} from "../../../domain/played-card.model";
+import {EMPTY_PLAYED_CARD, PlayedCardModel} from "../../../../domain/played-card.model";
 
 @Component({
   selector: 'played-card',

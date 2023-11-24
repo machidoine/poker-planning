@@ -1,10 +1,12 @@
 import {HostListener, Injectable, NgZone, OnDestroy} from '@angular/core';
-import {Observable} from "rxjs";
-import {RoomModel} from "../../../domain/room.model";
-import {SseServiceService} from "../../../sse-service.service";
+import {map, Observable} from "rxjs";
+import {RoomModel} from "../domain/room.model";
+import {SseServiceService} from "../sse-service.service";
 import {PlayerIdDtoModel} from "./player-id-dto.model";
 import {RoomDtoModel} from "./room-dto.model";
-import {environment} from "../../../../environments/environment";
+import {environment} from "../../environments/environment";
+import {CardModel} from "../domain/card.model";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +25,9 @@ export class RoomService implements OnDestroy {
         return this._roomId
     }
 
-    constructor(private zone: NgZone, private sseService: SseServiceService) {
+    constructor(private zone: NgZone,
+                private sseService: SseServiceService,
+                private http: HttpClient) {
         const playerId = sessionStorage.getItem('playerId')
         if (playerId) {
             this._playerId = JSON.parse(playerId)
@@ -45,7 +49,7 @@ export class RoomService implements OnDestroy {
                 sessionStorage.setItem('playerId', JSON.stringify(this._playerId))
             })
 
-            let dispatchRoom = (e: MessageEvent<any>) => this.zone.run(() => observer.next(this.toRoomModel(e)));
+            let dispatchRoom = (e: MessageEvent<any>) => this.zone.run(() => observer.next(this.toRoomModel(e.data)));
 
             this._eventSource.addEventListener("new-player", dispatchRoom)
             this._eventSource.addEventListener("play-card", dispatchRoom)
@@ -60,8 +64,8 @@ export class RoomService implements OnDestroy {
         })
     }
 
-    private toRoomModel(e: MessageEvent<any>): RoomModel {
-        const room: RoomDtoModel = JSON.parse(e.data)
+    private toRoomModel(data: string): RoomModel {
+        const room: RoomDtoModel = JSON.parse(data)
 
         return {
             id: room.id,
@@ -83,5 +87,28 @@ export class RoomService implements OnDestroy {
         this._roomId = roomId
         const playerParam = this._playerId?.privateId === undefined ? "" : `&playerId=${this._playerId?.privateId}`
         return this.getServerSentEvent(`${environment.apiUrl}/api/rooms/${roomId}/register-player?name=${name}${playerParam}`)
+    }
+
+    createRoom(): Observable<string> {
+        return this.http.post<{ id: string }>(`${environment.apiUrl}/api/rooms/create`, {})
+            .pipe(map(data => data.id))
+    }
+
+    playCard(card: CardModel) {
+        const playerId = this._playerId?.privateId
+
+        this.http.post(`${environment.apiUrl}/api/rooms/${this._roomId}/player/${playerId}/play-card`, card.value).subscribe();
+    }
+
+    resetRoom() {
+        this.http.post(`${environment.apiUrl}/api/rooms/${this._roomId}/reset`, {}).subscribe();
+    }
+
+    revealCard() {
+        this.http.post(`${environment.apiUrl}/api/rooms/${this._roomId}/reveal-card`, {}).subscribe();
+    }
+
+    hideCard() {
+        this.http.post(`${environment.apiUrl}/api/rooms/${this._roomId}/hide-card`, {}).subscribe();
     }
 }

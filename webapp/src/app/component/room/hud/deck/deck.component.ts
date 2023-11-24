@@ -1,9 +1,9 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {DeckModel} from "../../../domain/deck.model";
+import {DeckModel} from "../../../../domain/deck.model";
 import {DeckService} from "./deck.service";
 import {CardComponent} from "./card/card.component";
-import {CardModel} from "../../../domain/card.model";
+import {CardModel} from "../../../../domain/card.model";
 
 @Component({
   selector: 'deck',

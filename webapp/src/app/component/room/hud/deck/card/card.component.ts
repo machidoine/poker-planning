@@ -1,6 +1,6 @@
 import {Component, EventEmitter, HostBinding, HostListener, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CardModel} from "../../../../domain/card.model";
+import {CardModel} from "../../../../../domain/card.model";
 
 @Component({
   selector: 'card',

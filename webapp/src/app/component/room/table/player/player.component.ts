@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {EMPTY_PLAYER, PlayerModel} from "../../../domain/player.model";
+import {EMPTY_PLAYER, PlayerModel} from "../../../../domain/player.model";
 import {PlayedCardComponent} from "./played-card.component";
 
 @Component({

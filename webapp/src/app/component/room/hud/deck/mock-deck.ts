@@ -1,4 +1,4 @@
-import {DeckModel} from "../../../domain/deck.model";
+import {DeckModel} from "../../../../domain/deck.model";
 
 export const FIBO_DECK: DeckModel = {
   cards: [
