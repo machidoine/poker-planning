@@ -73,33 +73,15 @@ class RoomController {
         @RequestParam name: String,
         @RequestParam(required = false) playerId: String?
     ): SseEmitter {
-        if (playerId != null) {
-            val foundPlayerIndex =
-                rooms[roomId]?.players?.indexOfFirst { p -> p.id.privateId == UUID.fromString(playerId) }
-            if (foundPlayerIndex != null && foundPlayerIndex != -1) {
-                val player = rooms[roomId]?.players?.get(foundPlayerIndex)
-                val emitter = player?.emitter
-
-                rooms[roomId]?.players?.get(foundPlayerIndex)?.let {
-                    it.emitter.send(
-                        SseEmitter.event()
-                            .name("new-player-id")
-                            .data(it.id)
-                            .build()
-                    )
-                }
-
-                broadcastRoomToEachPlayer(roomId, "new-player")
-
-                return emitter!!
-            }
+        if (!rooms.containsKey(roomId)) {
+            rooms[roomId] = Room(roomId)
         }
+        val room = rooms.getValue(roomId)
 
-        val player = Player(name, SseEmitter(Long.MAX_VALUE), null)
+        val player = getOrCreatePlayer(playerId, room, name)
 
-        rooms.getOrPut(roomId) { Room(roomId) }?.players?.add(player)
-        player.emitter.onCompletion { rooms[roomId]?.players?.remove(player) }
-        player.emitter.onTimeout { rooms[roomId]?.players?.remove(player) }
+        player.emitter.onCompletion { room.players.remove(player) }
+        player.emitter.onTimeout { room.players.remove(player) }
 
         player.emitter.send(
             SseEmitter.event()
@@ -111,7 +93,29 @@ class RoomController {
         broadcastRoomToEachPlayer(roomId, "new-player")
 
         return player.emitter
+    }
 
+    private fun getOrCreatePlayer(
+        playerId: String?,
+        room: Room,
+        name: String
+    ): Player {
+        if (playerId != null) {
+            val foundPlayerIndex =
+                room.players.indexOfFirst { p -> p.id.privateId == UUID.fromString(playerId) }
+            if (foundPlayerIndex != -1) {
+                val emitter = SseEmitter(Long.MAX_VALUE)
+                val player = room.players[foundPlayerIndex].copy(emitter = emitter)
+                room.players[foundPlayerIndex] = player
+
+                return player
+            }
+        }
+
+        val player = Player(name, SseEmitter(Long.MAX_VALUE), null)
+        room.players.add(player)
+
+        return player
     }
 
 }
