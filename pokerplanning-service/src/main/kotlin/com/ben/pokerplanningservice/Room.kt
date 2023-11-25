@@ -17,10 +17,15 @@ data class Room(
 @EqualsAndHashCode(of = ["id.privateId"])
 data class Player(
     val name: String,
-    val emitter: SseEmitter,
+    var emitter: SseEmitter,
     val card: Int?,
     val hasPlayed: Boolean = false,
     val id: PlayerId = PlayerId()
+)
+
+fun Player.toPlayerId() = PlayerId(
+    publicId = id.publicId,
+    privateId = id.privateId
 )
 
 data class PlayerId(

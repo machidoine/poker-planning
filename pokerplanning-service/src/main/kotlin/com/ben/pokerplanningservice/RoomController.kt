@@ -14,8 +14,6 @@ import java.util.concurrent.ConcurrentHashMap
 class RoomController {
     private val rooms = ConcurrentHashMap<String, Room>()
 
-    class RoomDoesNotExistException(roomId: String) : RuntimeException("The room $roomId does not exist")
-
     @PostMapping("/create")
     @ResponseBody
     fun createRoom(): RoomDTO {
@@ -106,53 +104,65 @@ class RoomController {
         }
     }
 
-    @GetMapping("/{roomId}/register-player")
+    @GetMapping("/{roomId}/player/{playerId}/sse")
     @ResponseBody
     fun register(
         @PathVariable roomId: String,
-        @RequestParam name: String,
-        @RequestParam(required = false) playerId: String?
+        @PathVariable playerId: String
     ): SseEmitter {
         val room = getRoom(roomId)
 
-        val player = getOrCreatePlayer(playerId, room, name)
+        room.players
+            .find { p -> p.id.privateId.toString() == playerId }
+            ?.let {
+                it.emitter = SseEmitter(Long.MAX_VALUE)
+                it.emitter.onCompletion { room.players.remove(it) }
+                it.emitter.onTimeout { room.players.remove(it) }
 
-        player.emitter.onCompletion { room.players.remove(player) }
-        player.emitter.onTimeout { room.players.remove(player) }
-        player.emitter.onError { room.players.remove(player) }
+                it.emitter.send(
+                    SseEmitter.event()
+                        .name("new-it-player")
+                        .data(it.id)
+                        .build()
+                )
 
-        player.emitter.send(
-            SseEmitter.event()
-                .name("new-player-id")
-                .data(player.id)
-                .build()
-        )
+                this.broadcastRoomToEachPlayer(roomId, "new-player")
 
-        broadcastRoomToEachPlayer(roomId, "new-player")
+                return it.emitter
+            }
 
-        return player.emitter
+        throw PlayerDoesNotExistException(roomId, playerId)
     }
 
-    private fun getOrCreatePlayer(
-        playerId: String?,
-        room: Room,
-        name: String
-    ): Player {
-        if (playerId != null) {
-            val foundPlayerIndex =
-                room.players.indexOfFirst { p -> p.id.privateId == UUID.fromString(playerId) }
-            if (foundPlayerIndex != -1) {
-                val player = room.players[foundPlayerIndex].copy(emitter = SseEmitter(Long.MAX_VALUE))
-                room.players[foundPlayerIndex] = player
-
-                return player
-            }
-        }
+    @PostMapping("/{roomId}/player/create")
+    @ResponseBody
+    fun createPlayer(
+        @PathVariable roomId: String,
+        @RequestParam name: String
+    ): PlayerId {
+        val room = getRoom(roomId)
 
         val player = Player(name, SseEmitter(Long.MAX_VALUE), null)
         room.players.add(player)
 
-        return player
+        broadcastRoomToEachPlayer(roomId, "new-player")
+
+        return player.toPlayerId()
+    }
+
+    private fun getPlayer(
+        playerId: String,
+        room: Room
+    ): Player? {
+        return room.players.find { p -> p.id.privateId.toString() == playerId }
+//        val foundPlayerIndex =
+//            room.players.indexOfFirst { p -> p.id.privateId == UUID.fromString(playerId) }
+//        if (foundPlayerIndex != -1) {
+//            val player = room.players[foundPlayerIndex].copy(emitter = SseEmitter(Long.MAX_VALUE))
+//            room.players[foundPlayerIndex] = player
+//
+//            return player
+//        }
     }
 
     private val random: SecureRandom = SecureRandom()
