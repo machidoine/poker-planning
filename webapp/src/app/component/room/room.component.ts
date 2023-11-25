@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HudComponent} from "./hud/hud.component";
 import {TableComponent} from "./table/table.component";
 import {ActivatedRoute} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {ChooseNameDialogComponent} from "./choose-name-dialog.component";
+import {RoomService} from "../../service/room.service";
 
 @Component({
   selector: 'room',
@@ -25,7 +26,8 @@ export class RoomComponent implements OnInit {
   }
 
   constructor(private route: ActivatedRoute,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private roomService:RoomService) {
     let name = sessionStorage.getItem('playerName');
     if (name) {
       this._playerName = name
@@ -46,5 +48,10 @@ export class RoomComponent implements OnInit {
       });
     }
   }
+  @HostListener("window:unload")
+  close(): void {
+    this.roomService.close()
+  }
+
 }
 

@@ -75,6 +75,20 @@ class RoomController {
         }
     }
 
+    @PostMapping("/{roomId}/player/{playerId}/quit")
+    @ResponseBody
+    fun playerQuit(@PathVariable roomId: String, @PathVariable playerId: UUID) {
+        val room = getRoom(roomId)
+        val foundPlayerIndex = room.players.indexOfFirst { p -> p.id.privateId == playerId }
+
+        if (foundPlayerIndex != -1) {
+            room.players[foundPlayerIndex].emitter.complete()
+            room.players.removeAt(foundPlayerIndex)
+
+            broadcastRoomToEachPlayer(roomId, "play-card")
+        }
+    }
+
     private fun broadcastRoomToEachPlayer(roomId: String, eventName: String) {
         val room = getRoom(roomId)
 
@@ -105,6 +119,7 @@ class RoomController {
 
         player.emitter.onCompletion { room.players.remove(player) }
         player.emitter.onTimeout { room.players.remove(player) }
+        player.emitter.onError { room.players.remove(player) }
 
         player.emitter.send(
             SseEmitter.event()
@@ -127,8 +142,7 @@ class RoomController {
             val foundPlayerIndex =
                 room.players.indexOfFirst { p -> p.id.privateId == UUID.fromString(playerId) }
             if (foundPlayerIndex != -1) {
-                val emitter = SseEmitter(Long.MAX_VALUE)
-                val player = room.players[foundPlayerIndex].copy(emitter = emitter)
+                val player = room.players[foundPlayerIndex].copy(emitter = SseEmitter(Long.MAX_VALUE))
                 room.players[foundPlayerIndex] = player
 
                 return player
