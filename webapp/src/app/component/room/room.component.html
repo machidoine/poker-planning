@@ -1,2 +1,6 @@
-<hud />
-<table [roomId]="roomId" [playerName]="playerName"></table>
+<div *ngIf="playerName;else empty">
+  <hud />
+  <table [roomId]="roomId" [playerName]="playerName"></table>
+</div>
+
+<ng-template #empty></ng-template>

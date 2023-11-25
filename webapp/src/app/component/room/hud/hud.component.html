@@ -1,4 +1,10 @@
-<button (click)="resetRoom()">reset</button>
-<button (click)="hideCard()">hide</button>
-<button (click)="revealCard()">reveal</button>
-<deck (hasBeenSelected)="cardSelected($event)" />
+<div class="action">
+  <button mat-raised-button color="warn" (click)="resetRoom()">reset</button>
+  <button mat-raised-button color="basic" (click)="hideCard()">hide</button>
+  <button mat-raised-button color="basic" (click)="revealCard()">reveal</button>
+</div>
+
+<div class="deck">
+  <deck (hasBeenSelected)="cardSelected($event)"/>
+</div>
+

@@ -1,6 +1,18 @@
-your name : <input type="text" placeholder="your name" [(ngModel)]="playerName"/>
-<br/>
-<button (click)="createRoom()">Create Room</button>
-<br/>
-<input type="text" placeholder="provide a room id" [(ngModel)]="roomId"/>
-<button (click)="joinRoom()">Join</button>
+<mat-card>
+
+  <mat-card-content>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Room ID</mat-label>
+        <input matInput type="text" placeholder="Provide a room ID" [(ngModel)]="roomId"/>
+      </mat-form-field>
+
+      <button mat-flat-button (click)="joinRoom()" color="primary">Join</button>
+    </p>
+
+    <p>
+      <button mat-flat-button (click)="createRoom()" color="primary">Create Room</button>
+    </p>
+
+  </mat-card-content>
+</mat-card>

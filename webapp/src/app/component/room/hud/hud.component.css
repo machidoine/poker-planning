@@ -7,5 +7,23 @@
 
   display: inline-flex;
   flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+}
+
+button {
+  margin: 0.3vh;
+}
+
+.action {
+  margin: 0.3vh;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.deck {
+  display: inline-flex;
+  flex-wrap: wrap;
   justify-content: center;
 }

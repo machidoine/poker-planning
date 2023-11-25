@@ -3,11 +3,13 @@ import {CommonModule} from '@angular/common';
 import {DeckComponent} from "./deck/deck.component";
 import {CardModel} from "../../../domain/card.model";
 import {RoomService} from "../../../service/room.service";
+import {MatButtonModule} from "@angular/material/button";
+import {MatCardModule} from "@angular/material/card";
 
 @Component({
     selector: 'hud',
     standalone: true,
-    imports: [CommonModule, DeckComponent, DeckComponent, DeckComponent],
+  imports: [CommonModule, DeckComponent, DeckComponent, DeckComponent, MatButtonModule, MatCardModule],
     templateUrl: './hud.component.html',
     styleUrls: ['./hud.component.css']
 })
