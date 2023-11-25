@@ -49,10 +49,10 @@ export class RoomService {
             this._eventSource.addEventListener("hide-card", dispatchRoom)
             this._eventSource.addEventListener("reset", dispatchRoom)
 
-            this._eventSource.onerror = error => {
-                console.log(error)
-                this.zone.run(() => observer.error(error))
-            }
+            // this._eventSource.onerror = error => {
+            //     console.log(error)
+            //     this.zone.run(() => observer.error(error))
+            // }
         })
     }
 
