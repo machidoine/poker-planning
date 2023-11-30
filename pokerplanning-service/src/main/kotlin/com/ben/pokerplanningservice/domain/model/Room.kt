@@ -1,8 +1,7 @@
-package com.ben.pokerplanningservice.domain
+package com.ben.pokerplanningservice.domain.model
 
 import com.ben.pokerplanningservice.application.command.PlayCardRequest
 import com.ben.pokerplanningservice.domain.exception.PlayerDoesNotExistException
-import lombok.EqualsAndHashCode
 import java.time.Instant
 import java.util.*
 
@@ -46,17 +45,4 @@ data class Room(
         }
     }
 }
-
-@EqualsAndHashCode(of = ["id.privateId"])
-data class Player(
-    val name: String,
-    val card: Int? = null,
-    val hasPlayed: Boolean = false,
-    val id: PlayerId = PlayerId()
-)
-
-data class PlayerId(
-    val publicId: UUID = UUID.randomUUID(),
-    val privateId: UUID = UUID.randomUUID()
-)
 

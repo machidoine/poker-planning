@@ -1,7 +1,7 @@
 package com.ben.pokerplanningservice.infra
 
-import com.ben.pokerplanningservice.domain.PlayerSenderRepository
-import com.ben.pokerplanningservice.domain.Room
+import com.ben.pokerplanningservice.domain.model.Room
+import com.ben.pokerplanningservice.domain.repository.PlayerSenderRepository
 import com.ben.pokerplanningservice.exposition.SseTemplate
 import com.ben.pokerplanningservice.exposition.toRoomDto
 import org.springframework.stereotype.Repository

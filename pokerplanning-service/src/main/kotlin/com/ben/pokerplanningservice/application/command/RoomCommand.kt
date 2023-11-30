@@ -1,8 +1,8 @@
 package com.ben.pokerplanningservice.application.command
 
-import com.ben.pokerplanningservice.domain.Room
-import com.ben.pokerplanningservice.domain.RoomRepository
 import com.ben.pokerplanningservice.domain.exception.RoomNotFoundException
+import com.ben.pokerplanningservice.domain.model.Room
+import com.ben.pokerplanningservice.domain.repository.RoomRepository
 
 abstract class RoomCommand<P, R>(private val roomRepository: RoomRepository) {
     fun execute(roomId: String, request: P): RoomCommandResponse<R> {

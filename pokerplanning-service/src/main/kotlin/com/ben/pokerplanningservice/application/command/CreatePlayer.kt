@@ -1,9 +1,9 @@
 package com.ben.pokerplanningservice.application.command
 
-import com.ben.pokerplanningservice.domain.Player
-import com.ben.pokerplanningservice.domain.PlayerSenderRepository
-import com.ben.pokerplanningservice.domain.Room
-import com.ben.pokerplanningservice.domain.RoomRepository
+import com.ben.pokerplanningservice.domain.model.Player
+import com.ben.pokerplanningservice.domain.model.Room
+import com.ben.pokerplanningservice.domain.repository.PlayerSenderRepository
+import com.ben.pokerplanningservice.domain.repository.RoomRepository
 import org.springframework.stereotype.Component
 
 

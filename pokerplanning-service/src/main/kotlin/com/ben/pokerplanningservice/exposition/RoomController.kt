@@ -3,9 +3,9 @@ package com.ben.pokerplanningservice.exposition
 import com.ben.pokerplanningservice.application.command.*
 import com.ben.pokerplanningservice.application.query.GetPlayer
 import com.ben.pokerplanningservice.application.query.GetRoom
-import com.ben.pokerplanningservice.domain.PlayerId
 import com.ben.pokerplanningservice.domain.exception.PlayerDoesNotExistException
 import com.ben.pokerplanningservice.domain.exception.RoomNotFoundException
+import com.ben.pokerplanningservice.domain.model.PlayerId
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*

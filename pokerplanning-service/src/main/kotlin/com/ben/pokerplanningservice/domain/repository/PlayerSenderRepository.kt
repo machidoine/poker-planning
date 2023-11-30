@@ -1,5 +1,6 @@
-package com.ben.pokerplanningservice.domain
+package com.ben.pokerplanningservice.domain.repository
 
+import com.ben.pokerplanningservice.domain.model.Room
 import java.util.*
 
 interface PlayerSenderRepository {

@@ -1,4 +1,4 @@
-package com.ben.pokerplanningservice.domain
+package com.ben.pokerplanningservice.domain.model
 
 import java.security.SecureRandom
 import java.util.*

@@ -1,7 +1,7 @@
 package com.ben.pokerplanningservice.exposition
 
-import com.ben.pokerplanningservice.domain.Player
-import com.ben.pokerplanningservice.domain.Room
+import com.ben.pokerplanningservice.domain.model.Player
+import com.ben.pokerplanningservice.domain.model.Room
 import java.util.*
 
 data class RoomDTO(

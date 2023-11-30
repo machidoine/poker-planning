@@ -1,4 +1,6 @@
-package com.ben.pokerplanningservice.domain
+package com.ben.pokerplanningservice.domain.repository
+
+import com.ben.pokerplanningservice.domain.model.Room
 
 interface RoomRepository {
     fun getRoom(roomId: String): Room?

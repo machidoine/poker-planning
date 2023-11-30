@@ -1,7 +1,7 @@
 package com.ben.pokerplanningservice.infra
 
-import com.ben.pokerplanningservice.domain.Room
-import com.ben.pokerplanningservice.domain.RoomRepository
+import com.ben.pokerplanningservice.domain.model.Room
+import com.ben.pokerplanningservice.domain.repository.RoomRepository
 import org.springframework.stereotype.Repository
 import java.time.Instant
 import java.util.concurrent.ConcurrentHashMap
