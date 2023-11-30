@@ -6,6 +6,8 @@ import com.ben.pokerplanningservice.application.query.GetRoom
 import com.ben.pokerplanningservice.domain.exception.PlayerDoesNotExistException
 import com.ben.pokerplanningservice.domain.exception.RoomNotFoundException
 import com.ben.pokerplanningservice.domain.model.PlayerId
+import com.ben.pokerplanningservice.exposition.dto.RoomDTO
+import com.ben.pokerplanningservice.exposition.dto.toRoomDto
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository
 import java.time.Instant
 import java.util.concurrent.ConcurrentHashMap
 
+
 @Repository
 class InMemoryRoomRepository : RoomRepository {
     val map = ConcurrentHashMap<String, Room>()

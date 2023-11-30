@@ -3,7 +3,7 @@ package com.ben.pokerplanningservice.infra
 import com.ben.pokerplanningservice.domain.model.Room
 import com.ben.pokerplanningservice.domain.repository.PlayerSenderRepository
 import com.ben.pokerplanningservice.exposition.SseTemplate
-import com.ben.pokerplanningservice.exposition.toRoomDto
+import com.ben.pokerplanningservice.exposition.dto.toRoomDto
 import org.springframework.stereotype.Repository
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 import java.util.*
