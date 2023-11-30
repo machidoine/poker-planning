@@ -95,6 +95,10 @@ export class RoomService {
             }))
     }
 
+    getRoom(roomId: string): Observable<RoomModel> {
+        return this.http.get<RoomModel>(`${environment.apiUrl}/api/rooms/${roomId}`, {})
+    }
+
     playCard(roomId: String, card: CardModel) {
         if (this.playerId) {
             this.http.post(`${environment.apiUrl}/api/rooms/${roomId}/player/${this.playerId.privateId}/play-card`, card.value).subscribe();

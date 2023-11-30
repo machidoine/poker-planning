@@ -54,13 +54,17 @@ export class RoomComponent implements OnInit {
     }
 
     initPlayerAndSse(roomId: string) {
-        this.service.getOrCreatePlayer(roomId, this.playerName)
-            .subscribe(playerId => {
-                this.service.getSse(roomId, playerId.privateId)
-                    .subscribe(room => {
-                        this.room = room
-                    })
-            })
+        this.service.getRoom(roomId).subscribe(room => {
+            this.room = room
+            this.service.getOrCreatePlayer(roomId, this.playerName)
+                .subscribe(playerId => {
+                    this.service.getSse(roomId, playerId.privateId)
+                        .subscribe(room => {
+                            this.room = room
+                        })
+                })
+        })
+
     }
 
     @HostListener("window:unload")
