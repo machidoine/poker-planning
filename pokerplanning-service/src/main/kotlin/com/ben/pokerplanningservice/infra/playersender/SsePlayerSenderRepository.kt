@@ -1,4 +1,4 @@
-package com.ben.pokerplanningservice.infra
+package com.ben.pokerplanningservice.infra.playersender
 
 import com.ben.pokerplanningservice.domain.model.Room
 import com.ben.pokerplanningservice.domain.repository.PlayerSenderRepository

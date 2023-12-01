@@ -1,12 +1,13 @@
-package com.ben.pokerplanningservice.infra
+package com.ben.pokerplanningservice.infra.room
 
 import com.ben.pokerplanningservice.domain.model.Room
 import com.ben.pokerplanningservice.domain.repository.RoomRepository
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Repository
 import java.time.Instant
 import java.util.concurrent.ConcurrentHashMap
 
-
+@Profile("inmemory")
 @Repository
 class InMemoryRoomRepository : RoomRepository {
     val map = ConcurrentHashMap<String, Room>()
