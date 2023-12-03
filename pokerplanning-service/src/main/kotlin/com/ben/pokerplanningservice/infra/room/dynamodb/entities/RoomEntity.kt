@@ -9,26 +9,26 @@ import java.time.Instant
 @DynamoDBTable(tableName = "Rooms")
 data class RoomEntity(
     @get:DynamoDBHashKey(attributeName = "id")
-    val id: String,
+    var id: String = "",
 
-    @get:DynamoDBAttribute val players: List<PlayerEntity> = listOf(),
-    @get:DynamoDBAttribute val cardRevealed: Boolean = false,
-    @get:DynamoDBAttribute val creationDate: Instant = Instant.now(),
-    @get:DynamoDBAttribute val lastAccessDate: Instant = Instant.now()
+    @get:DynamoDBAttribute var players: List<PlayerEntity> = listOf(),
+    @get:DynamoDBAttribute var cardRevealed: Boolean = false,
+    @get:DynamoDBAttribute var creationDate: Long = Instant.now().toEpochMilli(),
+    @get:DynamoDBAttribute var lastAccessDate: Long = Instant.now().toEpochMilli()
 )
 
 fun RoomEntity.toDomain() = Room(
     id = id,
     players = players.map { it.toDomain() },
     cardRevealed = cardRevealed,
-    creationDate = creationDate,
-    lastAccessDate = lastAccessDate
+    creationDate = Instant.ofEpochMilli(creationDate),
+    lastAccessDate = Instant.ofEpochMilli(lastAccessDate)
 )
 
 fun Room.toEntity() = RoomEntity(
     id = id,
     players = players.map { it.toEntity() },
     cardRevealed = cardRevealed,
-    creationDate = creationDate,
-    lastAccessDate = lastAccessDate
+    creationDate = creationDate.toEpochMilli(),
+    lastAccessDate = lastAccessDate.toEpochMilli()
 )
