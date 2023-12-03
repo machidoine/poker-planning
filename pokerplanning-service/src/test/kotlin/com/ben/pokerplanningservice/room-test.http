@@ -1,0 +1,12 @@
+###
+POST http://localhost:8080/api/rooms/create
+
+<> 2023-12-03T133348.200.json
+
+# DBFt4W62prcAQV8A3BdAnybaV5k
+
+###
+GET http://localhost:8080/api/rooms/PXE0AkVEFIUbh3VY12IcVKJ_BWQ
+
+<> 2023-12-03T133445.200.json
+<> 2023-12-03T133433.200.json

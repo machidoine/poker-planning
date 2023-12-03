@@ -1,0 +1,6 @@
+hazelcast:
+  cluster-name: dev
+  map:
+    default:
+      time-to-live-seconds: 0
+      max-idle-seconds: 8
