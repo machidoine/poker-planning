@@ -61,7 +61,7 @@ class RoomController(
 
     @PostMapping("/{roomId}/player/{playerId}/play-card")
     @ResponseBody
-    fun playCard(@PathVariable roomId: String, @PathVariable playerId: UUID, @RequestBody card: Int) {
+    fun playCard(@PathVariable roomId: String, @PathVariable playerId: UUID, @RequestBody card: String) {
         playCard.execute(roomId, PlayCardRequest(playerId, card))
     }
 

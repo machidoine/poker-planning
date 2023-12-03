@@ -1,6 +1,6 @@
 export interface PlayerDtoModel {
   "name": string,
-  "card": number,
+  "card": string,
   "hasPlayed": boolean,
   "publicId": string
 }

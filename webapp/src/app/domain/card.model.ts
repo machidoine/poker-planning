@@ -1,4 +1,4 @@
 export interface CardModel {
-  value: number,
+  value: string,
   selected: boolean
 }

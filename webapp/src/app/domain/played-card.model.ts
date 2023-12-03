@@ -1,5 +1,5 @@
 export interface PlayedCardModel {
-  value?: number,
+  value?: string,
   isRecto: boolean,
   played: boolean
 }

@@ -27,3 +27,5 @@ class RemovePlayer(
 }
 
 data class RemovePlayerRequest(val playerId: UUID)
+
+// {"id":"gIumeZ1KgrLkPP9NxpkQgyz8tkg","players":[{"name":"tete","card":null,"hasPlayed":true,"publicId":"144dc7fa-e152-47c8-b468-4b9fec5fc4ce"}],"cardRevealed":false}

@@ -6,7 +6,7 @@ POST http://localhost:8080/api/rooms/create
 # DBFt4W62prcAQV8A3BdAnybaV5k
 
 ###
-GET http://localhost:8080/api/rooms/PXE0AkVEFIUbh3VY12IcVKJ_BWQ
+GET http://localhost:8080/api/rooms/QIftTypD2yALfNZIlR4gv781gJM
 
 <> 2023-12-03T133445.200.json
 <> 2023-12-03T133433.200.json

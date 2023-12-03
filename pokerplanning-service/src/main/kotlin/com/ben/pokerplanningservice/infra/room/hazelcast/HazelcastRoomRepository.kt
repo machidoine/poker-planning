@@ -7,6 +7,7 @@ import com.ben.pokerplanningservice.infra.room.hazelcast.model.toDomain
 import com.ben.pokerplanningservice.infra.room.hazelcast.model.toEntity
 import com.hazelcast.core.HazelcastInstance
 import com.hazelcast.map.IMap
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Repository
 import java.time.Instant
@@ -14,7 +15,7 @@ import java.time.Instant
 
 @Repository
 @Profile("hazelcast")
-class HazelcastRoomRepository(private val hazelcastInstance: HazelcastInstance) : RoomRepository {
+class HazelcastRoomRepository(@Qualifier("hazelcastInstance") private val hazelcastInstance: HazelcastInstance) : RoomRepository {
     private fun getMap(): IMap<String, RoomEntity> {
         return hazelcastInstance.getMap("room")
     }

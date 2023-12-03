@@ -5,6 +5,7 @@ import {TableComponent} from "./room/table/table.component";
 import {HudComponent} from "./room/hud/hud.component";
 import {RouterModule, RouterOutlet} from "@angular/router";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {Title} from "@angular/platform-browser";
 
 
 @Component({
@@ -23,5 +24,7 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    title = 'webapp';
+  public constructor(private titleService: Title){
+    this.titleService.setTitle("Poker Planning");
+  }
 }

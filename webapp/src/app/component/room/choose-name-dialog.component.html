@@ -2,9 +2,9 @@
   <p>Choose your name</p>
   <mat-form-field>
     <mat-label>Your Name</mat-label>
-    <input matInput [(ngModel)]="data.name">
+    <input matInput [(ngModel)]="data.name" cdkFocusInitial>
   </mat-form-field>
 </div>
 <div mat-dialog-actions align="center">
-  <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial>Ok</button>
+  <button mat-button [mat-dialog-close]="data.name">Ok</button>
 </div>

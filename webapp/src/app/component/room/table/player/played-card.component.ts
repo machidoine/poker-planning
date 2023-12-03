@@ -20,17 +20,17 @@ export class PlayedCardComponent {
 
   @HostBinding("class.played")
   get played() {
-    return this.playedCard.played
+    return this.playedCard?.played
   }
 
   @HostBinding("class.recto")
   get isRecto() {
-    return this.playedCard.isRecto
+    return this.playedCard?.isRecto
   }
 
   @HostBinding("class.verso")
   get isVerso() {
-    return !this.playedCard.isRecto
+    return !this.playedCard?.isRecto
   }
 
 }

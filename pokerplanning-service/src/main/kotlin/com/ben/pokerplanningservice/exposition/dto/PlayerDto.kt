@@ -5,7 +5,7 @@ import java.util.*
 
 data class PlayerDto(
     val name: String,
-    val card: Int?,
+    val card: String?,
     val hasPlayed: Boolean,
     val publicId: UUID
 )

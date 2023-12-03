@@ -14,7 +14,7 @@ class SseTemplate {
         try {
             map[id]?.send(builder.build())
         } catch (e: IOException) {
-            map[id]?.completeWithError(e)
+            map[id]?.complete()
         }
     }
 

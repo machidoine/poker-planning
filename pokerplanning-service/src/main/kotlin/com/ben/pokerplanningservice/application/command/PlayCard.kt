@@ -28,4 +28,4 @@ class PlayCard(
 
 }
 
-data class PlayCardRequest(val playerId: UUID, val card: Int)
+data class PlayCardRequest(val playerId: UUID, val card: String)

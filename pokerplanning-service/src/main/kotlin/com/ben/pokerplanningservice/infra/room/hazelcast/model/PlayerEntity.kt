@@ -14,13 +14,13 @@ data class PlayerEntity(
 fun PlayerEntity.toDomain() = Player(
     id = id.toDomain(),
     name = name,
-    card = card?.let { Integer.parseInt(it) },
+    card = card,
     hasPlayed = hasPlayed
 )
 
 fun Player.toEntity() = PlayerEntity(
     id = id.toEntity(),
     name = name,
-    card = card?.toString(),
+    card = card,
     hasPlayed = hasPlayed
 )

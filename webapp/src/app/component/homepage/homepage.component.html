@@ -1,16 +1,12 @@
 <mat-card>
 
   <mat-card-content>
-    <p>
-      <mat-form-field appearance="outline">
-        <mat-label>Room ID</mat-label>
-        <input matInput type="text" placeholder="Provide a room ID" [(ngModel)]="roomId"/>
-      </mat-form-field>
+    <h1>Online Poker Planning</h1>
+    <p>Welcome ! This application allow you to do poker planning estimations</p>
+    <p>To join an existing room, request a link to any already connected teammate</p>
+    <p>Otherwise, create a new room. Be aware that a room is deleted after 8 hours of inactivity</p>
 
-      <button mat-flat-button (click)="joinRoom()" color="primary">Join</button>
-    </p>
-
-    <p>
+    <p style="text-align: center">
       <button mat-flat-button (click)="createRoom()" color="primary">Create Room</button>
     </p>
 

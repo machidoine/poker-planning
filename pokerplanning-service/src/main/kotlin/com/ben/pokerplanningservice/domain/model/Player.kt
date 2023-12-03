@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode
 @EqualsAndHashCode(of = ["id.privateId"])
 data class Player(
     val name: String,
-    val card: Int? = null,
+    val card: String? = null,
     val hasPlayed: Boolean = false,
     val id: PlayerId = PlayerId()
 )
