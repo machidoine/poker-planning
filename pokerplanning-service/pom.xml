@@ -88,6 +88,9 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <docker>
+                        <bindHostToBuilder>true</bindHostToBuilder>
+                    </docker>
                 </configuration>
                 <executions>
                     <execution>
