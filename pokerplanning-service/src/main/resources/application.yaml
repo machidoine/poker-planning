@@ -1,3 +1,6 @@
+spring:
+  profiles:
+    active: hazelcast
 hazelcast:
   cluster-name: dev
   mapConfigs:
