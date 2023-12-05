@@ -5,6 +5,8 @@ import com.ben.pokerplanningservice.domain.repository.RoomRepository
 import com.ben.pokerplanningservice.infra.room.hazelcast.model.RoomEntity
 import com.ben.pokerplanningservice.infra.room.hazelcast.model.toDomain
 import com.ben.pokerplanningservice.infra.room.hazelcast.model.toEntity
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.hazelcast.core.HazelcastInstance
 import com.hazelcast.map.IMap
 import org.springframework.beans.factory.annotation.Qualifier
@@ -16,14 +18,19 @@ import java.time.Instant
 @Repository
 @Profile("hazelcast")
 class HazelcastRoomRepository(@Qualifier("hazelcastInstance") private val hazelcastInstance: HazelcastInstance) : RoomRepository {
-    private fun getMap(): IMap<String, RoomEntity> {
+
+    private val mapper = jacksonObjectMapper()
+    private fun getMap(): IMap<String, String> {
         return hazelcastInstance.getMap("room")
     }
 
-    override fun getRoom(roomId: String): Room? = getMap()[roomId]?.toDomain()
+    override fun getRoom(roomId: String): Room? =
+            getMap()[roomId]?.let { mapper.readValue<RoomEntity>(it) }?.toDomain()
 
     override fun saveRoom(room: Room) {
-        getMap()[room.id] = room.copy(lastAccessDate = Instant.now()).toEntity()
+        getMap()[room.id] =
+                mapper.writeValueAsString(
+                        room.copy(lastAccessDate = Instant.now()).toEntity())
     }
 
     override fun deleteRoom(room: Room) {
